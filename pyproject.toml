@@ -34,4 +34,3 @@ exclude = '.git'
 
 [tool.isort]
 line_length = 119
-single_line_imports = true
