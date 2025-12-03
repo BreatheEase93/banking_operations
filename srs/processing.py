@@ -1,7 +1,7 @@
 from typing import Any
 
 
-def filter_by_state(by_state: list[dict[str, Any]], state="EXECUTED") -> list[dict[str, Any]]:
+def filter_by_state(by_state: list[dict[str, Any]], state: str="EXECUTED") -> list[dict[str, Any]]:
     """Функция возвращает новый список словарей, содержащий только те словари, у которых ключ state"""
     new_by_state:   list[dict[str, Any]] =[]
     for item in by_state:
@@ -10,5 +10,8 @@ def filter_by_state(by_state: list[dict[str, Any]], state="EXECUTED") -> list[di
     return new_by_state
 
 
-a = [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}, {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'}, {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}]
-print(filter_by_state(a))
+def sort_by_date(by_state: list[dict[str, Any]], decreasing: bool= True) -> list[dict[str, Any]]:
+    """Функция возвращает новый список, отсортированный по дате (date)."""
+    sorted_by_date: list[dict[str, Any]] = sorted(by_state, key=lambda x: x['date'], reverse=decreasing)
+    return sorted_by_date
+
