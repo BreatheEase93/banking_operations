@@ -14,9 +14,12 @@ def get_mask_card_number(card_number: int) -> str:
 
 
 def get_mask_account(account: int) -> str:
-    """Функция принимает на вход номер счета и возвращает его маску"""
-    account_string = str(account)
-    account_list = list(account_string)
-    account_list[:-4] = ["*", "*"]
-    account_list_new = "".join(account_list)
-    return account_list_new
+    """Функция принимает на вход номер счёта и возвращает его маску"""
+    if isinstance(account, int):
+        account_string = str(account)
+        if len(account_string) == 20:
+            account_list = list(account_string)
+            account_list[:-4] = ["*", "*"]
+            account_list_new = "".join(account_list)
+            return account_list_new
+    return "Неверные данные, только номер счёта. Пример :12345678901234567890"
