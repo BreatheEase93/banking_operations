@@ -1,14 +1,17 @@
 from typing import Any
 
 
-def filter_by_state(by_state: list[dict[str, Any]], state: str = "EXECUTED") -> list[dict[str, Any]]:
+def filter_by_state(by_state: list[dict[str, Any]], state: str = "EXECUTED") -> list[dict[str, Any]]| str:
     """Функция возвращает новый список словарей, содержащий только те словари, у которых ключ state"""
-    new_by_state: list[dict[str, Any]] = []
-    for item in by_state:
-        if item.get("state") == state:
-            new_by_state.append(item)
-    return new_by_state
-
+    if by_state != [] and isinstance(by_state, list):
+        if state == "EXECUTED" or state == "CANCELED":
+            new_by_state: list[dict[str, Any]] = []
+            for item in by_state:
+                if item.get("state") == state:
+                    new_by_state.append(item)
+            return new_by_state
+        return "Неправельный параметр state"
+    return "Неверный список"
 
 def sort_by_date(by_state: list[dict[str, Any]], decreasing: bool = True) -> list[dict[str, Any]]:
     """Функция возвращает новый список, отсортированный по дате (date)."""
