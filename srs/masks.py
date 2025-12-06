@@ -1,6 +1,6 @@
 def get_mask_card_number(card_number: int) -> str:
     """Функция принимает на вход номер карты и возвращает её маску"""
-    if  isinstance(card_number, int):
+    if isinstance(card_number, int):
         card_number_string = str(card_number)
         if len(card_number_string) == 16:
             card_number_list = list(card_number_string)

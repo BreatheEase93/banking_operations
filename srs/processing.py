@@ -1,7 +1,7 @@
 from typing import Any
 
 
-def filter_by_state(by_state: list[dict[str, Any]], state: str = "EXECUTED") -> list[dict[str, Any]]| str:
+def filter_by_state(by_state: list[dict[str, Any]], state: str = "EXECUTED") -> list[dict[str, Any]] | str:
     """Функция возвращает новый список словарей, содержащий только те словари, у которых ключ state"""
     if by_state != [] and isinstance(by_state, list):
         if state == "EXECUTED" or state == "CANCELED":
@@ -13,7 +13,8 @@ def filter_by_state(by_state: list[dict[str, Any]], state: str = "EXECUTED") -> 
         return "Неправельный параметр state"
     return "Неверный список"
 
-def sort_by_date(by_state: list[dict[str, Any]], decreasing: bool = True) -> list[dict[str, Any]]| str:
+
+def sort_by_date(by_state: list[dict[str, Any]], decreasing: bool = True) -> list[dict[str, Any]] | str:
     """Функция возвращает новый список, отсортированный по дате (date)."""
     if by_state != [] and isinstance(by_state, list):
         if isinstance(decreasing, bool):
