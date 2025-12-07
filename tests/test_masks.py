@@ -18,7 +18,7 @@ def test_get_mask_card_number(card_number: int, expected: str) -> Any:
     assert get_mask_card_number(card_number) == expected
 
 
-def test_get_mask_card_number_all(card_number_1: int, empty_number: None, empty_list: list) -> Any:
+def test_get_mask_card_number_all(card_number_1, empty_number, empty_list) -> Any:
     """Доп тест функции get_mask_card_number"""
     assert get_mask_card_number(card_number_1) == "7000 79** **** 6361"
     assert get_mask_card_number(empty_number) == "Неверные данные, только номер карты. Пример :1234567890123456"
@@ -38,7 +38,7 @@ def test_get_mask_account(account: int, expected: str) -> Any:
     assert get_mask_account(account) == expected
 
 
-def test_get_mask_account_all(account_1: int, empty_number: None, empty_list: list) -> Any:
+def test_get_mask_account_all(account_1: int, empty_number, empty_list) -> Any:
     """Доп тест функции get_mask_account`"""
     assert get_mask_account(account_1) == "**4305"
     assert get_mask_account(empty_number) == "Неверные данные, только номер счёта. Пример :12345678901234567890"
