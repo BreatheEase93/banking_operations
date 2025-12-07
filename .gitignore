@@ -64,7 +64,7 @@ Thumbs.db
 # Отчеты о покрытии кода тестами
 .coverage
 # Папка с отчетами о тестировании
-#htmlcov/
+htmlcov/
 .nox/
 .tox/
 
