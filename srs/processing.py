@@ -1,16 +1,24 @@
 from typing import Any
 
 
-def filter_by_state(by_state: list[dict[str, Any]], state: str = "EXECUTED") -> list[dict[str, Any]]:
+def filter_by_state(by_state: list[dict[str, Any]], state: str = "EXECUTED") -> list[dict[str, Any]] | str:
     """Функция возвращает новый список словарей, содержащий только те словари, у которых ключ state"""
-    new_by_state: list[dict[str, Any]] = []
-    for item in by_state:
-        if item.get("state") == state:
-            new_by_state.append(item)
-    return new_by_state
+    if by_state != [] and isinstance(by_state, list):
+        if state == "EXECUTED" or state == "CANCELED":
+            new_by_state: list[dict[str, Any]] = []
+            for item in by_state:
+                if item.get("state") == state:
+                    new_by_state.append(item)
+            return new_by_state
+        return "Неправельный параметр state"
+    return "Неверный список"
 
 
-def sort_by_date(by_state: list[dict[str, Any]], decreasing: bool = True) -> list[dict[str, Any]]:
+def sort_by_date(by_state: list[dict[str, Any]], decreasing: bool = True) -> list[dict[str, Any]] | str:
     """Функция возвращает новый список, отсортированный по дате (date)."""
-    sorted_by_date: list[dict[str, Any]] = sorted(by_state, key=lambda x: x["date"], reverse=decreasing)
-    return sorted_by_date
+    if by_state != [] and isinstance(by_state, list):
+        if isinstance(decreasing, bool):
+            sorted_by_date: list[dict[str, Any]] = sorted(by_state, key=lambda x: x["date"], reverse=decreasing)
+            return sorted_by_date
+        return "Неверное значение decreasing"
+    return "Неверный список"
