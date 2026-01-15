@@ -2,7 +2,7 @@ from typing import Any
 
 import pytest
 
-from srs.masks import get_mask_account, get_mask_card_num
+from srs.masks import get_mask_account, get_mask_card_number
 
 
 @pytest.mark.parametrize(
