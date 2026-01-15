@@ -8,7 +8,7 @@ def filter_by_currency(list_of_dictionaries: list[dict[str, Any]], code: str) ->
         return
     for transaction in list_of_dictionaries:
         try:
-            if transaction['operationAmount']['currency']['code'] == code:
+            if transaction["operationAmount"]["currency"]["code"] == code:
                 yield transaction
         except (KeyError, TypeError):
             continue
@@ -20,7 +20,7 @@ def transaction_descriptions(list_of_dictionaries: list[dict[str, Any]]) -> Iter
         return
     for transaction in list_of_dictionaries:
         try:
-            description = transaction['description']
+            description = transaction["description"]
             if description is not None:
                 yield str(description)
         except (KeyError, TypeError):
