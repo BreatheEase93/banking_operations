@@ -1,3 +1,5 @@
+import pytest
+
 from generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
@@ -37,7 +39,7 @@ def test_transaction_descriptions_all(by_transactions, empty_list):
 
 
 def test_card_number_generator_compact():
-    """Краткие тесты генератора карт"""
+    """Тесты генератора карт"""
     # проверка работоспособности
     assert next(card_number_generator(1, 1)) == "0000 0000 0000 0001"
     assert len(list(card_number_generator(1, 10))) == 10
@@ -47,3 +49,19 @@ def test_card_number_generator_compact():
     assert list(card_number_generator(0, 1)) == []
     assert list(card_number_generator(2, 1)) == []
     assert list(card_number_generator(None, 1)) == []
+
+
+@pytest.mark.parametrize(
+    "start, finish, expected",
+    [
+        (1, 1, ["0000 0000 0000 0001"]),
+        (1, 3, ["0000 0000 0000 0001", "0000 0000 0000 0002", "0000 0000 0000 0003"]),
+        (10, 12, ["0000 0000 0000 0010", "0000 0000 0000 0011", "0000 0000 0000 0012"]),
+        (1234567890123456, 1234567890123456, ["1234 5678 9012 3456"]),
+        (9999999999999998, 9999999999999999, ["9999 9999 9999 9998", "9999 9999 9999 9999"]),
+    ],
+)
+def test_card_number_generator_valid(start, finish, expected):
+    """Тест валидных значений"""
+    result = list(card_number_generator(start, finish))
+    assert result == expected
