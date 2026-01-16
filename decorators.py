@@ -10,12 +10,13 @@ def log(filename=None):
                 message = f"Функция: {func.__name__}. Результат: {result}."
             except Exception as e:
                 message = f"Функция: {func.__name__}. Ошибка: {type(e).__name__} - {e}. Inputs: {args}, {kwargs}"
+                result = message
             if filename:
                 with open(filename, "a", encoding="utf-8") as f:
                     f.write(message + "\n")
             else:
                 print(message)
-            return message
+            return result
 
         return wrapper
 

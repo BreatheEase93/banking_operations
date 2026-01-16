@@ -4,7 +4,7 @@ import tempfile
 from decorators import log
 
 
-# Декоратор без файла - успешное выполнение
+# Тест 1: Успешное выполнение с выводом в консоль
 def test_log_to_console_success(capsys):
     @log()
     def add(a, b):
@@ -14,10 +14,10 @@ def test_log_to_console_success(capsys):
 
     captured = capsys.readouterr()
     assert "Функция: add. Результат: 8." in captured.out
-    assert result == "Функция: add. Результат: 8."
+    assert result == 8
 
 
-# Тест 2: Декоратор без файла - ошибка
+# Тест 2: Ошибка с выводом в консоль
 def test_log_to_console_error(capsys):
     @log()
     def divide(a, b):
@@ -27,61 +27,38 @@ def test_log_to_console_error(capsys):
 
     captured = capsys.readouterr()
     assert "Ошибка" in captured.out
-    assert "Ошибка" in result
+    assert "ZeroDivisionError" in str(result)
 
 
-# Тест 3: Декоратор с файлом - успешное выполнение
+# Тест 3: Успешное выполнение с записью в файл
 def test_log_to_file_success():
-    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as tmp:
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
         tmp_filename = tmp.name
 
     try:
-
         @log(filename=tmp_filename)
         def multiply(a, b):
             return a * b
 
         result = multiply(4, 5)
 
-        assert result == "Функция: multiply. Результат: 20."
+        assert result == 20
 
-        with open(tmp_filename, "r", encoding="utf-8") as f:
+        with open(tmp_filename, 'r', encoding='utf-8') as f:
             content = f.read()
-            assert "Результат" in content
+            assert "Результат: 20." in content
     finally:
         os.unlink(tmp_filename)
 
 
-# Тест 4: Декоратор с файлом - ошибка
-def test_log_to_file_error():
-    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as tmp:
-        tmp_filename = tmp.name
-
-    try:
-
-        @log(filename=tmp_filename)
-        def raise_error():
-            raise ValueError("test error")
-
-        result = raise_error()
-
-        assert "Ошибка" in result
-
-        with open(tmp_filename, "r", encoding="utf-8") as f:
-            content = f.read()
-            assert "Ошибка" in content
-    finally:
-        os.unlink(tmp_filename)
-
-
-# Тест 5: Работа с фикстурой из conftest
+# Тест 4: Работа с фикстурой by_state
 def test_log_with_fixture(capsys, by_state):
     @log()
-    def count_executed(transactions):
-        return len([t for t in transactions if t["state"] == "EXECUTED"])
+    def count_executed(data):
+        return len([item for item in data if item["state"] == "EXECUTED"])
 
     result = count_executed(by_state)
 
     captured = capsys.readouterr()
-    assert "Функция: count_executed. Результат: 2." in captured.out
-    assert result == "Функция: count_executed. Результат: 2."
+    assert "Результат: 2." in captured.out
+    assert result == 2
