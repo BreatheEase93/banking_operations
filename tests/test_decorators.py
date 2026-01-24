@@ -32,10 +32,11 @@ def test_log_to_console_error(capsys):
 
 # Тест 3: Успешное выполнение с записью в файл
 def test_log_to_file_success():
-    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as tmp:
         tmp_filename = tmp.name
 
     try:
+
         @log(filename=tmp_filename)
         def multiply(a, b):
             return a * b
@@ -44,7 +45,7 @@ def test_log_to_file_success():
 
         assert result == 20
 
-        with open(tmp_filename, 'r', encoding='utf-8') as f:
+        with open(tmp_filename, "r", encoding="utf-8") as f:
             content = f.read()
             assert "Результат: 20." in content
     finally:
