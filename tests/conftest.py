@@ -102,3 +102,9 @@ def invalid_transactions() -> list[dict]:
         {"id": 1, "operationAmount": {"amount": "100"}},  # нет currency
         {"id": 2, "operationAmount": {"currency": {"name": "USD"}}},  # нет code
     ]
+
+
+@pytest.fixture()
+def json_file()-> str:
+    """Путь файла operations.json"""
+    return "data/operations.json"

@@ -10,8 +10,8 @@ def call_word_list(json_file :str)->List[Dict[str, Any]]:
         return empty_list
     if not json_file.lower().endswith('.json'):
         return empty_list
-    with open(json_file, 'r') as f:
+    with open(json_file, 'r',encoding='utf-8') as f:
         data = json.load(f)
-        if not isinstance(data, list) or  data == empty_list:
+        if not isinstance(data, list):
             return empty_list
     return data
