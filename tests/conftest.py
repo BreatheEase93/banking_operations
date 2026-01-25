@@ -1,4 +1,5 @@
 from typing import Any
+from unittest.mock import Mock
 
 import pytest
 
@@ -45,7 +46,8 @@ def by_state() -> list[dict[str, Any]]:
 
 
 @pytest.fixture()
-def by_transactions():
+def by_transactions() -> list[dict[str, Any]]:
+    """Список некоторых транзакций"""
     return [
         {
             "id": 939719570,
@@ -96,9 +98,56 @@ def by_transactions():
 
 
 @pytest.fixture()
+def by_transactions_1() -> list[dict[str, Any]]:
+    """Транзакция"""
+    return [
+        {
+            "id": 873106923,
+            "state": "EXECUTED",
+            "date": "2019-03-23T01:09:46.296404",
+            "operationAmount": {"amount": "43318.34", "currency": {"name": "руб.", "code": "RUB"}},
+            "description": "Перевод со счета на счет",
+            "from": "Счет 44812258784861134719",
+            "to": "Счет 74489636417521191160",
+        }
+    ]
+
+
+@pytest.fixture()
+def by_transactions_2() -> list[dict[str, Any]]:
+    """Транзакция"""
+    return [
+        {
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод организации",
+            "from": "Счет 75106830613657916952",
+            "to": "Счет 11776614605963066702",
+        }
+    ]
+
+
+@pytest.fixture()
 def invalid_transactions() -> list[dict]:
     """Транзакции с некорректной структурой"""
     return [
         {"id": 1, "operationAmount": {"amount": "100"}},  # нет currency
         {"id": 2, "operationAmount": {"currency": {"name": "USD"}}},  # нет code
     ]
+
+
+@pytest.fixture()
+def json_file() -> str:
+    """Путь файла operations.json"""
+    return "data/operations.json"
+
+
+@pytest.fixture()
+def mock_api_response():
+    """Фикстура для мока ответа от API"""
+    mock_response = Mock()
+    mock_response.status_code = 200
+    mock_response.raise_for_status = Mock()
+    return mock_response

@@ -1,10 +1,17 @@
-def log(filename=None):
-    """Декоратор, который будет автоматически логироет начало и конец выполнения функции,
-    а также ее результаты или возникшие ошибки.
-     Декоратор должен принимать необязательный аргумент filename, который определяет, куда будут записываться логи"""
+import functools
+from typing import Any, Callable, Optional, TypeVar, cast
 
-    def my_decorator(func):
-        def wrapper(*args, **kwargs):
+F = TypeVar("F", bound=Callable[..., Any])
+
+
+def log(filename: Optional[str] = None) -> Callable[[F], F]:
+    """Декоратор, который будет автоматически логировать начало и конец выполнения функции,
+    а также ее результаты или возникшие ошибки.
+    Декоратор должен принимать необязательный аргумент filename, который определяет, куда будут записываться логи"""
+
+    def my_decorator(func: F) -> F:
+        @functools.wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
                 result = func(*args, **kwargs)
                 message = f"Функция: {func.__name__}. Результат: {result}."
@@ -18,6 +25,6 @@ def log(filename=None):
                 print(message)
             return result
 
-        return wrapper
+        return cast(F, wrapper)  # type: ignore
 
     return my_decorator
