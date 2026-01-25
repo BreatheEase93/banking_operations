@@ -14,10 +14,10 @@ def withdrawal_of_the_amount(transaction: dict[str, Any]) -> float:
         return amount
     else:
         try:
-            url = f"https://api.apilayer.com/exchangerates_data/latest?base={code}&symbols=RUB"
-
+            url = "https://api.apilayer.com/exchangerates_data/convert"
+            params = {"from": code, "to": "RUB", "amount": amount}
             headers = {"apikey": os.getenv("API_KEY")}
-            response = requests.get(url, headers=headers, timeout=10)
+            response = requests.get(url, headers=headers, params=params, timeout=10)
             response.raise_for_status()
             result = response.json()
             exchange_rate = float(result["rates"]["RUB"])
