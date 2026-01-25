@@ -1,7 +1,9 @@
 from unittest.mock import patch
-from external_api import withdrawal_of_the_amount
-import requests
+
 import pytest
+import requests
+
+from external_api import withdrawal_of_the_amount
 
 
 class TestWithdrawalOfTheAmount:
@@ -22,11 +24,10 @@ class TestWithdrawalOfTheAmount:
         expected_amount = 9824.07 * 75.5
 
         # Act & Assert
-        with patch('requests.get', return_value=mock_api_response):
-            with patch.dict('os.environ', {'API_KEY': 'test_key'}):
+        with patch("requests.get", return_value=mock_api_response):
+            with patch.dict("os.environ", {"API_KEY": "test_key"}):
                 result = withdrawal_of_the_amount(transaction)
 
-        # Assert
         assert result == expected_amount
         mock_api_response.raise_for_status.assert_called_once()
 
@@ -36,11 +37,10 @@ class TestWithdrawalOfTheAmount:
         transaction = by_transactions_2[0]
 
         # Act & Assert
-        with patch('requests.get', side_effect=requests.exceptions.ConnectionError):
-            with patch.dict('os.environ', {'API_KEY': 'test_key'}):
+        with patch("requests.get", side_effect=requests.exceptions.ConnectionError):
+            with patch.dict("os.environ", {"API_KEY": "test_key"}):
                 result = withdrawal_of_the_amount(transaction)
 
-        # Assert
         assert result == 0
 
     def test_withdrawal_api_timeout_error(self, by_transactions_2, mock_api_response):
@@ -49,11 +49,10 @@ class TestWithdrawalOfTheAmount:
         transaction = by_transactions_2[0]
 
         # Act & Assert
-        with patch('requests.get', side_effect=requests.exceptions.Timeout):
-            with patch.dict('os.environ', {'API_KEY': 'test_key'}):
+        with patch("requests.get", side_effect=requests.exceptions.Timeout):
+            with patch.dict("os.environ", {"API_KEY": "test_key"}):
                 result = withdrawal_of_the_amount(transaction)
 
-        # Assert
         assert result == 0
 
     def test_withdrawal_api_http_error(self, by_transactions_2, mock_api_response):
@@ -63,11 +62,10 @@ class TestWithdrawalOfTheAmount:
         mock_api_response.raise_for_status.side_effect = requests.exceptions.HTTPError("404 Not Found")
 
         # Act & Assert
-        with patch('requests.get', return_value=mock_api_response):
-            with patch.dict('os.environ', {'API_KEY': 'test_key'}):
+        with patch("requests.get", return_value=mock_api_response):
+            with patch.dict("os.environ", {"API_KEY": "test_key"}):
                 result = withdrawal_of_the_amount(transaction)
 
-        # Assert
         assert result == 0
 
     def test_withdrawal_api_unknown_error(self, by_transactions_2, mock_api_response):
@@ -76,18 +74,17 @@ class TestWithdrawalOfTheAmount:
         transaction = by_transactions_2[0]
 
         # Act & Assert
-        with patch('requests.get', side_effect=Exception("Unknown error")):
-            with patch.dict('os.environ', {'API_KEY': 'test_key'}):
+        with patch("requests.get", side_effect=Exception("Unknown error")):
+            with patch.dict("os.environ", {"API_KEY": "test_key"}):
                 result = withdrawal_of_the_amount(transaction)
 
-        # Assert
         assert result == 0
 
     def test_withdrawal_invalid_structure(self, invalid_transactions):
         """Тест для транзакций с некорректной структурой"""
         for transaction in invalid_transactions:
             # Act & Assert
-            with pytest.raises(KeyError, TypeError):
+            with pytest.raises((KeyError, TypeError)):
                 withdrawal_of_the_amount(transaction)
 
     def test_withdrawal_api_key_not_set(self, by_transactions_2):
@@ -96,11 +93,10 @@ class TestWithdrawalOfTheAmount:
         transaction = by_transactions_2[0]
 
         # Act & Assert
-        with patch.dict('os.environ', {}, clear=True):
+        with patch.dict("os.environ", {}, clear=True):
             # Так как у нас есть блок try-except, функция вернет 0
             result = withdrawal_of_the_amount(transaction)
 
-        # Assert
         assert result == 0
 
     def test_withdrawal_api_invalid_response_structure(self, by_transactions_2, mock_api_response):
@@ -110,9 +106,8 @@ class TestWithdrawalOfTheAmount:
         mock_api_response.json.return_value = {"error": "Invalid request"}  # Нет ключа 'rates'
 
         # Act & Assert
-        with patch('requests.get', return_value=mock_api_response):
-            with patch.dict('os.environ', {'API_KEY': 'test_key'}):
+        with patch("requests.get", return_value=mock_api_response):
+            with patch.dict("os.environ", {"API_KEY": "test_key"}):
                 result = withdrawal_of_the_amount(transaction)
 
-        # Assert
         assert result == 0
