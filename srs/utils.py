@@ -1,11 +1,11 @@
 import json
-import os
 import logging
+import os
 from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
-file_handler = logging.FileHandler(f'../logs/{__name__}.log', mode='w')
-file_formatter = logging.Formatter('%(asctime)s %(module)s %(funcName)s %(levelname)s: %(message)s')
+file_handler = logging.FileHandler(f"../logs/{__name__}.log", mode="w")
+file_formatter = logging.Formatter("%(asctime)s %(module)s %(funcName)s %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 logger.setLevel(logging.DEBUG)
