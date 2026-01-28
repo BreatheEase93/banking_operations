@@ -1,8 +1,9 @@
+from typing import Any, Dict, Hashable, List
+
 import pandas as pd
-from typing import Any, Dict, List
 
 
-def read_transactions_from_csv(file_csv: str) -> List[Dict[str, Any]]:
+def read_transactions_from_csv(file_csv: str) -> List[Dict[Hashable, Any]]:
     """Функция, которая принимает на вход путь до csv-файла и
     возвращает список словарей с данными о финансовых транзакциях."""
     try:
@@ -15,7 +16,7 @@ def read_transactions_from_csv(file_csv: str) -> List[Dict[str, Any]]:
         raise Exception(f"Ошибка при обработке CSV-файла: {e}")
 
 
-def read_transactions_from_excel(file_xlsx: str) -> List[Dict[str, Any]]:
+def read_transactions_from_excel(file_xlsx: str) -> List[Dict[Hashable, Any]]:
     """Функция, которая принимает на вход путь до xlsx-файла и
     возвращает список словарей с данными о финансовых транзакциях."""
     try:

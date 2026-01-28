@@ -1,7 +1,14 @@
 import logging
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
-file_handler = logging.FileHandler(f"../logs/{__name__}.log", mode="w")
+
+
+log_dir = Path(__file__).parent.parent / "logs"
+log_dir.mkdir(parents=True, exist_ok=True)
+
+log_file = log_dir / f"{__name__}.log"
+file_handler = logging.FileHandler(log_file, mode="w")
 file_formatter = logging.Formatter("%(asctime)s %(module)s %(funcName)s %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)

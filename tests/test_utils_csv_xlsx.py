@@ -1,5 +1,7 @@
-import pytest
 from unittest.mock import patch
+
+import pytest
+
 from srs.utils_csv_xlsx import read_transactions_from_csv, read_transactions_from_excel
 
 
