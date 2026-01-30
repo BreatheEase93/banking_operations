@@ -151,3 +151,29 @@ def mock_api_response():
     mock_response.status_code = 200
     mock_response.raise_for_status = Mock()
     return mock_response
+
+
+@pytest.fixture()
+def csv_file() -> str:
+    """Путь файла transactions.csv"""
+    return "data/transactions.csvv"
+
+
+@pytest.fixture()
+def xlsx_file() -> str:
+    """Путь файла transactions_excel.xlsx"""
+    return "data/transactions_excel.xlsx"
+
+
+@pytest.fixture()
+def mock_csv_response():
+    """Фикстура для мока ответа от csv файла"""
+    mock_df = Mock()
+    return mock_df
+
+
+@pytest.fixture()
+def mock_xlsx_response():
+    """Фикстура для мока ответа от xlsx файла"""
+    mock_df = Mock()
+    return mock_df
