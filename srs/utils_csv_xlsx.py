@@ -1,13 +1,13 @@
-from typing import Any, Dict, Hashable, List
+from typing import Any, Hashable
 
 import pandas as pd
 
 
-def read_transactions_from_csv(file_csv: str) -> List[Dict[Hashable, Any]]:
+def read_transactions_from_csv(file_csv: str) -> list[dict[Hashable, Any]]:
     """Функция, которая принимает на вход путь до csv-файла и
     возвращает список словарей с данными о финансовых транзакциях."""
     try:
-        df = pd.read_csv(file_csv, delimiter=';')
+        df = pd.read_csv(file_csv, delimiter=";")
         transactions = df.to_dict(orient="records")
         return transactions
     except FileNotFoundError:
@@ -16,7 +16,7 @@ def read_transactions_from_csv(file_csv: str) -> List[Dict[Hashable, Any]]:
         raise Exception(f"Ошибка при обработке CSV-файла: {e}")
 
 
-def read_transactions_from_excel(file_xlsx: str) -> List[Dict[Hashable, Any]]:
+def read_transactions_from_excel(file_xlsx: str) -> list[dict[Hashable, Any]]:
     """Функция, которая принимает на вход путь до xlsx-файла и
     возвращает список словарей с данными о финансовых транзакциях."""
     try:

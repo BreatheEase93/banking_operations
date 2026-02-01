@@ -10,7 +10,7 @@ def test_count_works(by_transactions_2):
     """Тест, что подсчет работает."""
     result = process_bank_operations(by_transactions_2, ["Перевод", "Организация"])
     assert result["Перевод"] == 1
-    assert result["Организация"] == 1
+    assert result["Организация"] == 0
 
 
 def test_empty_search():

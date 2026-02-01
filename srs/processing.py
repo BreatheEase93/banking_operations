@@ -1,4 +1,4 @@
-from typing import Any, List, Dict
+from typing import Any, Dict, List
 
 
 def filter_by_state(by_state: list[dict[str, Any]], state: str = "EXECUTED") -> list[dict[str, Any]] | str:
