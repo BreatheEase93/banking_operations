@@ -1,5 +1,5 @@
 from typing import Any
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import pytest
 
@@ -177,3 +177,21 @@ def mock_xlsx_response():
     """Фикстура для мока ответа от xlsx файла"""
     mock_df = Mock()
     return mock_df
+
+
+@pytest.fixture
+def valid_string_inputs():
+    """Возвращает строки как допустимые аргументы"""
+    return ["да", "нет", "возможно"]
+
+
+@pytest.fixture
+def valid_mixed_inputs():
+    """Возвращает смешанные типы как допустимые аргументы"""
+    return [1, 2, 3, "да", "нет"]
+
+
+@pytest.fixture
+def mock_input():
+    """Фикстура для мока ввода"""
+    return patch("builtins.input")
