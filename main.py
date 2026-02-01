@@ -93,7 +93,7 @@ def main() -> None:
             to_transaction: str = mask_account_card(transaction.get("to", ""))
             amount: str = transaction["operationAmount"]["amount"]
             name: str = transaction["operationAmount"]["currency"]["name"]
-            if transaction.get("to", " ") != " ":
+            if transaction.get("from") is not None:
                 print(
                     f"""{date} {description}
     {from_transaction} -> {to_transaction}
@@ -115,7 +115,7 @@ def main() -> None:
             to_transaction: str = mask_account_card(transaction.get("to", ""))
             amount: str = transaction["amount"]
             name: str = transaction["currency_name"]
-            if transaction.get("to", " ") != " ":
+            if transaction.get("from") is not None:
                 print(
                     f"""{date} {description}
             {from_transaction} -> {to_transaction}
