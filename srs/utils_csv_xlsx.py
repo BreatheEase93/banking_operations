@@ -7,7 +7,7 @@ def read_transactions_from_csv(file_csv: str) -> List[Dict[Hashable, Any]]:
     """Функция, которая принимает на вход путь до csv-файла и
     возвращает список словарей с данными о финансовых транзакциях."""
     try:
-        df = pd.read_csv(file_csv)
+        df = pd.read_csv(file_csv, delimiter=';')
         transactions = df.to_dict(orient="records")
         return transactions
     except FileNotFoundError:

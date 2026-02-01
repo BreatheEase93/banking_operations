@@ -1,16 +1,16 @@
-from typing import Any
+from typing import Any, List, Dict
 
 
 def filter_by_state(by_state: list[dict[str, Any]], state: str = "EXECUTED") -> list[dict[str, Any]] | str:
     """Функция возвращает новый список словарей, содержащий только те словари, у которых ключ state"""
-    if by_state != [] and isinstance(by_state, list):
-        if state == "EXECUTED" or state == "CANCELED":
-            new_by_state: list[dict[str, Any]] = []
+    if by_state and isinstance(by_state, list):  # Изменено здесь
+        if state in ["EXECUTED", "CANCELED", "PENDING"]:  # Более читаемый вариант
+            new_by_state: List[Dict[str, Any]] = []
             for item in by_state:
                 if item.get("state") == state:
                     new_by_state.append(item)
             return new_by_state
-        return "Неправельный параметр state"
+        return "Неправильный параметр state"
     return "Неверный список"
 
 
