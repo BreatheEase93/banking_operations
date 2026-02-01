@@ -85,18 +85,52 @@ def main() -> None:
     if not sort_2_my_list:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
         return
+    if num == 1:
+        for transaction in sort_2_my_list:
+            date: str = get_date(transaction["date"])
+            description: str = transaction["description"]
+            from_transaction: str = mask_account_card(transaction.get("from", ""))
+            to_transaction: str = mask_account_card(transaction.get("to", ""))
+            amount: str = transaction["operationAmount"]["amount"]
+            name: str = transaction["operationAmount"]["currency"]["name"]
+            if transaction.get("to", " ") != " ":
+                print(
+                    f"""{date} {description}
+    {from_transaction} -> {to_transaction}
+    Сумма: {amount} {name}
+    """
+                )
+            else:
+                print(
+                    f"""{date} {description}
+                   {to_transaction}
+                   Сумма: {amount} {name}
+                   """
+                )
+    else:
+        for transaction in sort_2_my_list:
+            date: str = get_date(transaction["date"])
+            description: str = transaction["description"]
+            from_transaction: str = mask_account_card(transaction.get("from", ""))
+            to_transaction: str = mask_account_card(transaction.get("to", ""))
+            amount: str = transaction["amount"]
+            name: str = transaction["currency_name"]
+            if transaction.get("to", " ") != " ":
+                print(
+                    f"""{date} {description}
+            {from_transaction} -> {to_transaction}
+            Сумма: {amount} {name}
+            """
+                )
+            else:
+                print(
+                    f"""{date} {description}
+                    {to_transaction}
+                    Сумма: {amount} {name}
+                    """
+                )
 
-    for transaction in sort_2_my_list:
-        date: str = get_date(transaction["date"])
-        description: str = transaction["description"]
-        from_transaction: str = mask_account_card(transaction.get("from", ""))
-        to_transaction: str = mask_account_card(transaction.get("to", ""))
-        amount: str = transaction["operationAmount"]["amount"]
-        name: str = transaction["operationAmount"]["currency"]["name"]
-        print(
-            f"""{date} {description}
-{from_transaction} -> {to_transaction}
-Сумма: {amount} {name}
-"""
-        )
     return
+
+
+main()

@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from dateutil import parser
+
 import srs.masks
 
 
@@ -24,10 +26,8 @@ def mask_account_card(account_card: str) -> str:
 def get_date(date_string: str) -> str:
     """Меняет формат даты"""
     try:
-        date_object = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%f")
+        date_object = parser.parse(date_string)
         date_object_new = datetime.strftime(date_object, "%d.%m.%Y")
         return str(date_object_new)
-    except TypeError:
-        return "Неверные данные. Пример: 2024-03-11T02:26:18.671407"
-    except ValueError:
+    except (ValueError, TypeError, OverflowError):
         return "Неверные данные. Пример: 2024-03-11T02:26:18.671407"
