@@ -54,9 +54,11 @@ def main() -> None:
             print("Программа завершена досрочно. До свидания!")
             return
         if sort_2 == "по возрастанию":
-            sort_my_list: List[Dict[str, Any]] = sort_by_date(filter_my_list)
-        else:
             sort_my_list: List[Dict[str, Any]] = sort_by_date(filter_my_list, False)
+        else:
+            sort_my_list: List[Dict[str, Any]] = sort_by_date(
+                filter_my_list,
+            )
     else:
         sort_my_list: List[Dict[str, Any]] = filter_my_list
     print("Выводить только рублевые транзакции? Да/Нет")
@@ -138,6 +140,3 @@ def main() -> None:
                 )
 
     return
-
-
-main()

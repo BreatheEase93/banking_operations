@@ -2,7 +2,7 @@ from datetime import datetime
 
 from dateutil import parser
 
-import srs.masks
+from srs.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(account_card: str) -> str:
@@ -12,9 +12,9 @@ def mask_account_card(account_card: str) -> str:
         for i, word in enumerate(account_card_split):
             if word.isdigit():
                 if len(word) == 20:
-                    account_card_split[i] = srs.masks.get_mask_account(int(word))
+                    account_card_split[i] = get_mask_account(int(word))
                 if len(word) == 16:
-                    account_card_split[i] = srs.masks.get_mask_card_number(int(word))
+                    account_card_split[i] = get_mask_card_number(int(word))
         account_card = " ".join(account_card_split)
         return account_card
     return (

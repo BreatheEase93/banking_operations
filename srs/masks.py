@@ -18,7 +18,7 @@ logger.setLevel(logging.DEBUG)
 def get_mask_card_number(card_number: int) -> str:
     """Функция принимает на вход номер карты и возвращает её маску"""
     if isinstance(card_number, int):
-        card_number_string = str(card_number)
+        card_number_string = f"{card_number:016d}"
         if len(card_number_string) == 16:
             card_number_list = list(card_number_string)
             card_number_list[6:12] = ["*", "*", "*", "*", "*", "*"]
@@ -29,6 +29,7 @@ def get_mask_card_number(card_number: int) -> str:
             logger.info("Функция выполнена успешно")
             return card_number_string_new
         logger.error("Неправильная длина карты")
+        return "Неправильная длина карты"
     logger.error("Неверные данные")
     return "Неверные данные, только номер карты. Пример :1234567890123456"
 
@@ -36,7 +37,7 @@ def get_mask_card_number(card_number: int) -> str:
 def get_mask_account(account: int) -> str:
     """Функция принимает на вход номер счёта и возвращает его маску"""
     if isinstance(account, int):
-        account_string = str(account)
+        account_string = f"{account:016d}"
         if len(account_string) == 20:
             account_list = list(account_string)
             account_list[:-4] = ["*", "*"]
