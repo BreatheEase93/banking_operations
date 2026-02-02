@@ -32,7 +32,7 @@ def test_filter_by_state_all(empty_list, empty_number, empty_string, by_state):
     assert filter_by_state(empty_list) == "Неверный список"
     assert filter_by_state(empty_number) == "Неверный список"
     assert filter_by_state(empty_string) == "Неверный список"
-    assert filter_by_state(by_state, "121") == "Неправельный параметр state"
+    assert filter_by_state(by_state, "121") == "Неправильный параметр state"
 
 
 @pytest.mark.parametrize(
